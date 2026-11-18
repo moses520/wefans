@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f7f2">
+  <meta name="description" content="Private conversations between Wefans clients and freelancers.">
+  <title>Messages — Wefans</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #1d2925;
+      --muted: #65706b;
+      --paper: #f8f7f2;
+      --white: #fff;
+      --line: #e7e8e1;
+      --green: #164b3b;
+      --green-dark: #103c30;
+      --lime: #d3f26a;
+      --red: #9c3d36;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body { min-width: 320px; min-height: 100vh; margin: 0; color: var(--ink); background: var(--paper); }
+    button, input, textarea { font: inherit; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
+    .site-header { border-bottom: 1px solid var(--line); background: var(--paper); }
+    .header-inner { display: flex; min-height: 72px; align-items: center; justify-content: space-between; gap: 16px; }
+    .brand { display: inline-flex; align-items: center; gap: 9px; color: var(--ink); font-size: 24px; font-weight: 850; letter-spacing: -.075em; }
+    .brand-mark { display: grid; width: 30px; height: 30px; place-items: center; color: var(--green); }
+    .brand-mark svg { width: 30px; height: 30px; }
+    .back-link { color: var(--green); font-size: 12px; font-weight: 750; }
+    .back-link:hover { text-decoration: underline; }
+    main { padding: 38px 0 56px; }
+    .page-heading { margin-bottom: 20px; }
+    .page-kicker { margin: 0 0 8px; color: var(--green); font-size: 10px; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { margin: 0; font-size: clamp(28px, 4vw, 38px); letter-spacing: -.045em; }
+    .page-description { margin: 9px 0 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .status-banner { margin: 0 0 16px; padding: 12px 15px; border: 1px solid #dfe6d8; border-radius: 10px; color: #355342; background: #edf4e7; font-size: 12px; line-height: 1.5; }
+    .status-banner.error { border-color: #efcfcb; color: var(--red); background: #fff1ef; }
+    [hidden] { display: none !important; }
+    .auth-card { width: min(460px, 100%); margin: 28px auto; padding: 25px; border: 1px solid var(--line); border-radius: 16px; background: var(--white); box-shadow: 0 12px 32px rgba(27,44,37,.07); }
+    .auth-card h2 { margin: 0; font-size: 20px; letter-spacing: -.03em; }
+    .auth-card > p { color: var(--muted); font-size: 12px; line-height: 1.6; }
+    .auth-form { display: grid; gap: 12px; margin-top: 18px; }
+    .auth-form label { display: grid; gap: 6px; color: #46534d; font-size: 11px; font-weight: 700; }
+    .auth-form input[type="email"], .auth-form input[type="password"] { width: 100%; height: 43px; padding: 0 12px; border: 1px solid #dfe3db; border-radius: 8px; outline: none; font-size: 12px; }
+    .auth-form input:focus, .message-input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(22,75,59,.1); }
+    .remember-row { display: flex !important; align-items: center; gap: 8px !important; font-weight: 550 !important; }
+    .remember-row input { width: 15px; height: 15px; margin: 0; accent-color: var(--green); }
+    .button { display: inline-flex; min-height: 43px; align-items: center; justify-content: center; padding: 0 18px; border: 0; border-radius: 999px; color: #fff; background: var(--green); font-size: 12px; font-weight: 750; cursor: pointer; }
+    .button:hover { background: var(--green-dark); }
+    .button:disabled { cursor: wait; opacity: .65; }
+    .auth-error { margin: 12px 0 0; color: var(--red) !important; }
+    .auth-help a { color: var(--green); font-weight: 750; text-decoration: underline; }
+    .messages-layout { display: grid; min-height: 570px; grid-template-columns: minmax(210px, 280px) minmax(0, 1fr); overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: var(--white); box-shadow: 0 12px 32px rgba(27,44,37,.06); }
+    .conversation-sidebar { min-width: 0; border-right: 1px solid var(--line); background: #fbfcf9; }
+    .conversation-sidebar h2 { margin: 0; padding: 17px 16px; border-bottom: 1px solid var(--line); font-size: 13px; }
+    .conversation-list { max-height: 570px; overflow-y: auto; }
+    .conversation-button { display: block; width: 100%; padding: 14px 15px; border: 0; border-bottom: 1px solid #eff0ec; background: transparent; text-align: left; cursor: pointer; }
+    .conversation-button:hover, .conversation-button.active { background: #eef4e8; }
+    .conversation-button strong, .conversation-button span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .conversation-button strong { font-size: 12px; }
+    .conversation-button span { margin-top: 5px; color: var(--muted); font-size: 10px; }
+    .conversation-empty { margin: 12px; color: var(--muted); font-size: 11px; line-height: 1.55; }
+    .conversation-main { display: flex; min-width: 0; min-height: 0; flex-direction: column; }
+    .conversation-header { min-height: 67px; padding: 16px 19px; border-bottom: 1px solid var(--line); }
+    .conversation-header strong, .conversation-header span { display: block; }
+    .conversation-header strong { font-size: 13px; }
+    .conversation-header span { margin-top: 4px; color: var(--muted); font-size: 10px; }
+    .conversation-empty-state { display: grid; flex: 1; align-content: center; justify-items: center; padding: 24px; color: var(--muted); font-size: 12px; line-height: 1.55; text-align: center; }
+    .conversation-empty-state strong { margin-bottom: 6px; color: var(--ink); font-size: 15px; }
+    .message-thread { display: flex; min-height: 0; flex: 1; flex-direction: column; gap: 12px; overflow-y: auto; padding: 20px; background: #f8f9f6; }
+    .message-row { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+    .message-row.mine { align-items: flex-end; }
+    .message-bubble { max-width: min(78%, 560px); padding: 10px 13px; border-radius: 13px 13px 13px 4px; color: #2f3c35; background: #fff; box-shadow: 0 1px 3px rgba(20,40,30,.07); font-size: 12px; line-height: 1.55; overflow-wrap: anywhere; white-space: pre-wrap; }
+    .message-row.mine .message-bubble { border-radius: 13px 13px 4px 13px; color: #fff; background: var(--green); }
+    .message-time { color: #87918a; font-size: 9px; }
+    .message-form { display: flex; align-items: end; gap: 10px; padding: 12px; border-top: 1px solid var(--line); background: #fff; }
+    .message-input { min-width: 0; min-height: 45px; max-height: 130px; flex: 1; resize: vertical; padding: 11px 12px; border: 1px solid #dfe3db; border-radius: 10px; outline: none; font-size: 12px; line-height: 1.45; }
+    footer { padding: 18px 0 24px; color: #7d8780; font-size: 10px; text-align: center; }
+
+    @media (max-width: 680px) {
+      .wrap { width: calc(100% - 28px); }
+      .header-inner { min-height: 62px; }
+      main { padding: 25px 0 38px; }
+      .messages-layout { min-height: 0; grid-template-columns: 1fr; }
+      .conversation-sidebar { border-right: 0; border-bottom: 1px solid var(--line); }
+      .conversation-list { max-height: 170px; }
+      .conversation-main { min-height: 440px; }
+      .message-thread { padding: 14px; }
+      .message-bubble { max-width: 88%; }
+      .auth-card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="./" aria-label="Wefans home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none"><path d="M5 10.5 11 30h5l4-12 4 12h5l6-19.5h-5.4L27 24l-4.1-13.5h-5.6L13.2 24l-2.7-13.5H5Z" fill="currentColor"/><circle cx="32.5" cy="8" r="3.5" fill="#ff755d"/></svg>
+        </span>
+        <span>wefans</span>
+      </a>
+      <a class="back-link" href="./#talent">Browse freelancers</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="messages-page" aria-labelledby="page-title">
+      <div class="page-heading">
+        <p class="page-kicker">Private messages</p>
+        <h1 id="page-title">Your conversations</h1>
+        <p class="page-description" id="page-description">Chat directly with clients and freelancers about their projects.</p>
+      </div>
+      <div class="status-banner" id="page-status" role="status" aria-live="polite" hidden></div>
+
+      <section class="auth-card" id="auth-card" aria-labelledby="auth-title" hidden>
+        <h2 id="auth-title">Sign in to view your messages</h2>
+        <p>Wefans conversations are private to the client and freelancer in each chat.</p>
+        <form class="auth-form" id="auth-form">
+          <label>Email address<input id="auth-email" name="email" type="email" autocomplete="email" required></label>
+          <label>Password<input id="auth-password" name="password" type="password" autocomplete="current-password" required></label>
+          <label class="remember-row"><input id="remember-session" type="checkbox">Remember me</label>
+          <button class="button" id="auth-submit" type="submit">Log in</button>
+        </form>
+        <p class="auth-error" id="auth-error" role="alert" hidden></p>
+        <p class="auth-help">Need an account? <a href="./">Join Wefans from the homepage.</a></p>
+      </section>
+
+      <div class="messages-layout" id="messages-layout" hidden>
+        <aside class="conversation-sidebar" aria-label="Your conversations">
+          <h2>Conversations</h2>
+          <div class="conversation-list" id="conversation-list"></div>
+        </aside>
+        <section class="conversation-main" aria-label="Selected conversation">
+          <header class="conversation-header" id="conversation-header">
+            <strong id="conversation-name">Choose a conversation</strong>
+            <span id="conversation-category"></span>
+          </header>
+          <div class="conversation-empty-state" id="conversation-empty">
+            <strong id="empty-title">Your messages will appear here.</strong>
+            <span id="empty-description">Choose a conversation or contact a freelancer to get started.</span>
+          </div>
+          <div class="message-thread" id="message-thread" aria-live="polite" hidden></div>
+          <form class="message-form" id="message-form" hidden>
+            <textarea class="message-input" id="message-input" maxlength="2000" rows="2" placeholder="Write a message..." aria-label="Write a message" required></textarea>
+            <button class="button" id="send-button" type="submit">Send</button>
+          </form>
+        </section>
+      </div>
+    </section>
+  </main>
+  <footer class="wrap">Wefans private messaging · Conversations are visible only to their participants.</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="messages-app.js"></script>
+</body>
+</html>
