@@ -1,0 +1,1183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f7f2">
+  <meta name="description" content="Find your people and make great work happen on Wefans, the independent talent marketplace.">
+  <title>Wefans — Good work starts with your people</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #1d2925;
+      --muted: #65706b;
+      --paper: #f8f7f2;
+      --white: #fff;
+      --line: #e7e8e1;
+      --green: #164b3b;
+      --green-dark: #103c30;
+      --lime: #d3f26a;
+      --coral: #ff755d;
+      --shadow: 0 16px 42px rgba(27, 44, 37, .1);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--ink); background: var(--paper); }
+    button, input, select { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { color: inherit; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(1180px, calc(100% - 48px)); margin-inline: auto; }
+
+    .announcement {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 9px;
+      min-height: 34px;
+      padding: 6px 16px;
+      color: #f5f8ee;
+      background: var(--green-dark);
+      font-size: 11px;
+      letter-spacing: .04em;
+      text-align: center;
+    }
+    .announcement strong { color: var(--lime); font-weight: 700; }
+
+    .site-header { position: relative; z-index: 3; background: var(--paper); }
+    .header-main {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      border-bottom: 1px solid var(--line);
+    }
+    .brand { display: inline-flex; align-items: center; gap: 9px; font-size: 25px; font-weight: 850; letter-spacing: -.075em; }
+    .brand-mark { width: 31px; height: 31px; display: grid; place-items: center; color: var(--green); }
+    .brand-mark svg { width: 31px; height: 31px; }
+    .main-nav { display: flex; align-items: center; gap: 28px; margin-left: auto; }
+    .main-nav a, .header-actions button { font-size: 13px; font-weight: 650; }
+    .main-nav a { color: #46534d; transition: color .2s ease; }
+    .main-nav a:hover { color: var(--green); }
+    .header-actions { display: flex; align-items: center; gap: 10px; }
+    .header-actions button { border: 0; background: transparent; cursor: pointer; }
+    .button { display: inline-flex; justify-content: center; align-items: center; gap: 9px; min-height: 44px; padding: 0 18px; border: 1px solid transparent; border-radius: 999px; font-size: 13px; font-weight: 750; cursor: pointer; transition: transform .18s ease, background .18s ease, box-shadow .18s ease; }
+    .button:hover { transform: translateY(-1px); }
+    .button-dark { color: #fff; background: var(--green); }
+    .button-dark:hover { background: var(--green-dark); box-shadow: 0 8px 18px rgba(22, 75, 59, .18); }
+    .button-light { color: var(--green); background: #fff; border-color: var(--line); }
+    .button-light:hover { background: #f2f4ec; }
+    .button-lime { color: var(--ink); background: var(--lime); }
+    .button-lime:hover { background: #def98a; }
+    .mobile-menu { display: none; }
+
+    .hero { padding: 48px 0 30px; }
+    .hero-panel {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(340px, .82fr);
+      min-height: 430px;
+      overflow: hidden;
+      border-radius: 22px;
+      background: var(--green);
+      color: #fff;
+      isolation: isolate;
+    }
+    .hero-panel::before, .hero-panel::after { position: absolute; z-index: -1; content: ""; border: 1px solid rgba(255,255,255,.13); border-radius: 50%; }
+    .hero-panel::before { width: 570px; height: 570px; right: 2%; top: -31%; }
+    .hero-panel::after { width: 430px; height: 430px; right: 10%; top: -8%; }
+    .hero-copy { align-self: center; padding: 50px 0 50px 58px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; color: var(--lime); font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); }
+    h1 { max-width: 560px; margin: 0; font-size: clamp(42px, 5vw, 66px); font-weight: 760; line-height: .99; letter-spacing: -.062em; }
+    h1 em { color: var(--lime); font-family: Georgia, serif; font-weight: 500; }
+    .hero-copy > p { max-width: 460px; margin: 21px 0 27px; color: rgba(255,255,255,.76); font-size: 15px; line-height: 1.65; }
+    .search-box { display: flex; width: min(530px, 100%); min-height: 59px; padding: 6px; border-radius: 12px; background: #fff; box-shadow: 0 10px 24px rgba(0,0,0,.12); }
+    .search-icon { width: 22px; height: 22px; flex: 0 0 auto; align-self: center; margin-left: 12px; color: #52635b; }
+    .search-box input { min-width: 0; flex: 1; padding: 0 12px; border: 0; outline: 0; color: var(--ink); font-size: 13px; }
+    .search-box input::placeholder { color: #89918c; }
+    .search-box button { min-width: 100px; border: 0; border-radius: 8px; color: #fff; background: var(--green); font-size: 13px; font-weight: 750; cursor: pointer; }
+    .search-box button:hover { background: var(--green-dark); }
+    .popular-searches { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 15px; color: rgba(255,255,255,.7); font-size: 11px; }
+    .popular-searches button { padding: 5px 10px; border: 1px solid rgba(255,255,255,.32); border-radius: 999px; color: #fff; background: transparent; font-size: 11px; cursor: pointer; }
+    .popular-searches button:hover { color: var(--green); background: #fff; }
+    .hero-art { position: relative; display: flex; align-items: center; justify-content: center; min-height: 390px; padding: 24px; }
+    .hero-photo { position: relative; width: min(300px, 80%); aspect-ratio: .79; overflow: hidden; border: 7px solid rgba(255,255,255,.9); border-radius: 46% 46% 20px 20px; transform: rotate(4deg); box-shadow: 0 18px 45px rgba(0,0,0,.24); }
+    .hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .hero-note { position: absolute; z-index: 1; display: flex; align-items: center; gap: 9px; padding: 12px 15px; border-radius: 12px; color: var(--ink); background: #fff; box-shadow: var(--shadow); font-size: 11px; font-weight: 750; }
+    .hero-note svg { flex: 0 0 auto; color: var(--green); }
+    .hero-note-top { top: 17%; right: 1%; transform: rotate(3deg); }
+    .hero-note-bottom { bottom: 14%; left: 0; transform: rotate(-4deg); }
+    .avatar-stack { display: flex; }
+    .avatar-stack img { width: 25px; height: 25px; margin-left: -6px; border: 2px solid #fff; border-radius: 50%; object-fit: cover; }
+    .avatar-stack img:first-child { margin-left: 0; }
+    .avatar-stack span { display: grid; width: 25px; height: 25px; margin-left: -6px; place-items: center; border: 2px solid #fff; border-radius: 50%; color: #fff; background: var(--coral); font-size: 8px; }
+
+    .trust-row { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 24px 12px 28px; color: var(--muted); }
+    .trust-label { font-size: 11px; font-weight: 650; }
+    .trust-names { display: flex; align-items: center; justify-content: space-between; gap: clamp(16px, 4vw, 48px); color: #77817b; }
+    .trust-names span { font-size: 14px; font-weight: 800; letter-spacing: -.04em; }
+    .trust-names span:nth-child(2) { font-family: Georgia, serif; font-style: italic; font-size: 17px; }
+    .trust-names span:nth-child(3) { font-size: 12px; letter-spacing: .12em; }
+    .trust-names span:nth-child(4) { font-size: 17px; font-weight: 500; }
+    .trust-names span:nth-child(5) { font-size: 13px; letter-spacing: .09em; }
+
+    section.content-section { padding: 52px 0; }
+    .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 25px; }
+    .section-kicker { margin: 0 0 9px; color: #7a8a78; font-size: 10px; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
+    h2 { margin: 0; font-size: clamp(28px, 3vw, 38px); line-height: 1.1; letter-spacing: -.052em; }
+    .section-heading > p { max-width: 380px; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .category-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 13px; }
+    .category-card { min-height: 184px; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; gap: 14px; padding: 17px; border: 1px solid var(--line); border-radius: 13px; background: #fff; cursor: pointer; text-align: left; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+    .category-card:hover { transform: translateY(-4px); border-color: #bdcbb7; box-shadow: 0 12px 22px rgba(30,55,43,.07); }
+    .category-icon { display: grid; width: 41px; height: 41px; place-items: center; border-radius: 12px; color: var(--green); background: #edf3e6; font-size: 10px; font-weight: 850; letter-spacing: -.03em; }
+    .category-card:nth-child(2) .category-icon { color: #a55343; background: #ffede7; }
+    .category-card:nth-child(3) .category-icon { color: #7164a0; background: #f0edff; }
+    .category-card:nth-child(4) .category-icon { color: #a77822; background: #fff3d8; }
+    .category-card:nth-child(5) .category-icon { color: #46838b; background: #e5f5f2; }
+    .category-card:nth-child(6) .category-icon { color: #ab5a72; background: #ffedf1; }
+    .category-card strong { display: block; font-size: 13px; }
+    .category-card small { display: block; margin-top: 5px; color: var(--muted); font-size: 10px; line-height: 1.55; }
+    .category-more { display: inline-flex; gap: 5px; align-items: center; color: var(--green); font-size: 10px; font-weight: 750; }
+
+    .pricing-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .price-card { padding: 15px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+    .price-card-top { display: flex; justify-content: space-between; align-items: start; gap: 10px; }
+    .price-card h3 { margin: 0; font-size: 12px; line-height: 1.4; }
+    .price-value { flex: 0 0 auto; color: var(--green); font-size: 14px; font-weight: 850; white-space: nowrap; }
+    .price-unit { display: block; margin-top: 3px; color: var(--muted); font-size: 9px; font-weight: 600; text-align: right; }
+    .price-card p { margin: 10px 0 0; color: var(--muted); font-size: 10px; line-height: 1.55; }
+    .pricing-note { margin: 17px 0 0; padding: 13px 15px; border-radius: 10px; color: #47574c; background: #e9f1dc; font-size: 11px; line-height: 1.6; }
+
+    .gigs-section { padding-top: 44px !important; }
+    .gig-controls { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin: 25px 0 18px; }
+    .filters { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+    .filters::-webkit-scrollbar { display: none; }
+    .filter-chip { flex: 0 0 auto; padding: 9px 14px; border: 1px solid var(--line); border-radius: 999px; color: #46534d; background: #fff; font-size: 11px; font-weight: 700; cursor: pointer; }
+    .filter-chip:hover, .filter-chip.active { border-color: var(--green); color: #fff; background: var(--green); }
+    .sort-control { display: flex; flex: 0 0 auto; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; }
+    .sort-control select { padding: 8px 26px 8px 10px; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); background: #fff; font-size: 11px; }
+    .gig-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 17px; }
+    .gig-card { min-width: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 13px; background: #fff; transition: transform .2s ease, box-shadow .2s ease; }
+    .gig-card:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(22, 45, 34, .1); }
+    .gig-image-wrap { position: relative; height: 184px; overflow: hidden; background: #e5e9e1; }
+    .gig-image { width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+    .gig-card:hover .gig-image { transform: scale(1.035); }
+    .save-button { position: absolute; top: 11px; right: 11px; display: grid; width: 34px; height: 34px; place-items: center; border: 0; border-radius: 50%; background: rgba(255,255,255,.94); cursor: pointer; }
+    .save-button svg { width: 17px; height: 17px; }
+    .save-button.saved { color: #d75054; }
+    .save-button.saved svg { fill: currentColor; }
+    .gig-body { padding: 14px 14px 12px; }
+    .seller-line { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .seller-avatar { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
+    .seller-name { font-size: 10px; font-weight: 750; }
+    .profile-link { padding: 0; border: 0; color: var(--ink); background: transparent; font-size: inherit; font-weight: inherit; text-align: left; cursor: pointer; }
+    .profile-link:hover { color: var(--green); text-decoration: underline; }
+    .seller-level { display: block; margin-top: 2px; color: #78827c; font-size: 9px; }
+    .seller-profile-preview { display: -webkit-box; min-height: 31px; overflow: hidden; margin: 0 0 7px; color: #707b74; font-size: 10px; line-height: 1.55; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+    .gig-title { display: -webkit-box; min-height: 39px; overflow: hidden; color: #2b3731; font-size: 13px; font-weight: 650; line-height: 1.5; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+    .gig-title:hover { color: var(--green); }
+    .rating-row { display: flex; align-items: center; gap: 5px; margin-top: 9px; font-size: 11px; }
+    .rating-star { color: #e9a43a; font-size: 13px; }
+    .rating-score { font-weight: 800; }
+    .rating-count { color: #838b86; }
+    .gig-footer { display: flex; align-items: end; justify-content: space-between; gap: 8px; margin-top: 13px; padding-top: 11px; border-top: 1px solid #eff0ec; }
+    .gig-footer small { color: var(--muted); font-size: 9px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+    .gig-price { font-size: 15px; font-weight: 800; }
+    .gig-price span { margin-right: 3px; color: #77817b; font-size: 9px; font-weight: 600; }
+    .empty-state { grid-column: 1 / -1; padding: 44px 20px; border: 1px dashed #cbd4c8; border-radius: 14px; color: var(--muted); text-align: center; }
+    .empty-state strong { display: block; margin-bottom: 7px; color: var(--ink); font-size: 16px; }
+
+    .how-section { padding: 68px 0 74px; color: #fff; background: #203d32; }
+    .how-section .section-kicker { color: var(--lime); }
+    .how-section h2 { max-width: 480px; }
+    .how-section .section-heading > p { color: rgba(255,255,255,.68); }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 36px; }
+    .step-card { min-height: 173px; padding: 22px; border: 1px solid rgba(255,255,255,.16); border-radius: 14px; background: rgba(255,255,255,.045); }
+    .step-number { display: grid; width: 32px; height: 32px; place-items: center; border-radius: 50%; color: var(--ink); background: var(--lime); font-size: 12px; font-weight: 850; }
+    .step-card h3 { margin: 20px 0 8px; font-size: 16px; letter-spacing: -.02em; }
+    .step-card p { max-width: 280px; margin: 0; color: rgba(255,255,255,.68); font-size: 12px; line-height: 1.6; }
+    .cta-band { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin: 58px 0; padding: 31px 36px; border-radius: 18px; background: #e9f1dc; }
+    .cta-band h2 { max-width: 570px; font-size: clamp(25px, 3vw, 34px); }
+    .cta-band p { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
+    .cta-band .button { flex: 0 0 auto; }
+
+    footer { padding: 34px 0 23px; border-top: 1px solid var(--line); background: #f1f0ea; }
+    .footer-top { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-bottom: 24px; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 22px; color: #637069; font-size: 11px; }
+    .footer-links a:hover { color: var(--green); }
+    .footer-bottom { display: flex; justify-content: space-between; gap: 18px; padding-top: 17px; border-top: 1px solid #dedfd7; color: #828b85; font-size: 10px; }
+
+    .modal-backdrop { position: fixed; z-index: 10; inset: 0; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(14, 29, 22, .58); }
+    .modal-backdrop.open { display: flex; }
+    .modal { position: relative; width: min(470px, 100%); max-height: min(90vh, 750px); overflow-y: auto; padding: 31px; border-radius: 18px; background: #fff; box-shadow: 0 24px 80px rgba(0,0,0,.22); }
+    .modal-close { position: absolute; top: 14px; right: 14px; display: grid; width: 34px; height: 34px; place-items: center; border: 0; border-radius: 50%; background: #f2f3ee; cursor: pointer; }
+    .modal h2 { padding-right: 22px; font-size: 27px; }
+    .modal > p { margin: 11px 0 20px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+    .modal [hidden] { display: none !important; }
+    .profile-rating { display: flex; align-items: center; gap: 6px; margin: 0 0 20px; color: #626e66; font-size: 11px; }
+    .profile-detail h3 { margin: 18px 0 7px; font-size: 12px; }
+    .profile-detail p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
+    .profile-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+    .profile-tags span { padding: 6px 9px; border-radius: 999px; color: #3e5548; background: #edf3e6; font-size: 10px; font-weight: 650; }
+    .profile-service { display: grid; gap: 6px; margin-top: 20px; padding: 14px; border: 1px solid var(--line); border-radius: 10px; background: #fbfbf8; }
+    .profile-service small { color: var(--muted); font-size: 9px; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
+    .profile-service strong { font-size: 12px; line-height: 1.5; }
+    .profile-service span { color: var(--green); font-size: 13px; font-weight: 800; }
+    .profile-contact { width: 100%; margin-top: 15px; }
+    .modal-form { display: grid; gap: 12px; }
+    .modal-form label { display: grid; gap: 6px; color: #46534d; font-size: 11px; font-weight: 700; }
+    .modal-form input, .modal-form select { width: 100%; height: 43px; padding: 0 12px; border: 1px solid #dfe3db; border-radius: 8px; outline: none; font-size: 12px; }
+    .modal-form input:focus, .modal-form select:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(22,75,59,.1); }
+    .modal-form .button { margin-top: 4px; }
+    .auth-tabs { display: flex; margin: 20px 0 16px; border-bottom: 1px solid var(--line); }
+    .auth-tab { flex: 1; padding: 11px; border: 0; border-bottom: 2px solid transparent; color: var(--muted); background: transparent; font-size: 12px; font-weight: 750; cursor: pointer; }
+    .auth-tab.active { border-bottom-color: var(--green); color: var(--green); }
+    .password-control { position: relative; display: block; }
+    .password-control input { padding-right: 60px; }
+    .password-toggle { position: absolute; top: 50%; right: 11px; padding: 4px; border: 0; color: var(--green); background: transparent; font-size: 10px; font-weight: 750; cursor: pointer; transform: translateY(-50%); }
+    .auth-options { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .modal-form .check-label { display: flex; align-items: center; gap: 8px; color: #526057; font-size: 10px; font-weight: 550; line-height: 1.5; }
+    .modal-form .check-label input { width: 15px; height: 15px; flex: 0 0 auto; margin: 0; padding: 0; accent-color: var(--green); }
+    .text-button { padding: 0; border: 0; color: var(--green); background: transparent; font-size: 10px; font-weight: 750; cursor: pointer; }
+    .text-button:hover { text-decoration: underline; }
+    .chat-launcher { position: fixed; z-index: 9; right: 24px; bottom: 22px; display: inline-flex; align-items: center; gap: 9px; min-height: 48px; padding: 0 17px; border: 0; border-radius: 999px; color: #fff; background: var(--green); box-shadow: 0 10px 24px rgba(13,54,39,.24); font-size: 12px; font-weight: 750; cursor: pointer; }
+    .chat-launcher:hover { background: var(--green-dark); }
+    .chat-launcher svg { width: 18px; height: 18px; }
+    .chat-launcher[aria-expanded="true"] { background: var(--green-dark); }
+    .chat-panel { position: fixed; z-index: 11; right: 24px; bottom: 82px; display: flex; width: min(620px, calc(100vw - 48px)); height: min(540px, calc(100vh - 120px)); flex-direction: column; overflow: hidden; border: 1px solid #dfe4da; border-radius: 16px; background: #fff; box-shadow: 0 18px 60px rgba(20,40,30,.2); }
+    .chat-panel[hidden] { display: none; }
+    .chat-panel [hidden] { display: none !important; }
+    .chat-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 64px; padding: 12px 16px; color: #fff; background: var(--green); }
+    .chat-header strong, .chat-header small { display: block; }
+    .chat-header strong { font-size: 13px; }
+    .chat-header small { margin-top: 4px; color: rgba(255,255,255,.72); font-size: 10px; }
+    .chat-close { display: grid; width: 32px; height: 32px; place-items: center; border: 0; border-radius: 50%; color: #fff; background: rgba(255,255,255,.12); cursor: pointer; }
+    .chat-layout { display: grid; min-height: 0; flex: 1; grid-template-columns: 170px minmax(0,1fr); }
+    .chat-sidebar { overflow-y: auto; border-right: 1px solid var(--line); background: #fbfcf9; }
+    .chat-sidebar-title { margin: 0; padding: 13px 12px 8px; color: #7a857e; font-size: 9px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .chat-empty-list { margin: 8px 12px; color: var(--muted); font-size: 10px; line-height: 1.5; }
+    .chat-thread-button { display: block; width: 100%; padding: 11px 12px; border: 0; border-bottom: 1px solid #eff0ec; background: transparent; text-align: left; cursor: pointer; }
+    .chat-thread-button:hover, .chat-thread-button.active { background: #eef4e8; }
+    .chat-thread-button strong, .chat-thread-button span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .chat-thread-button strong { font-size: 10px; }
+    .chat-thread-button span { margin-top: 4px; color: var(--muted); font-size: 9px; }
+    .chat-main { display: flex; min-width: 0; min-height: 0; flex-direction: column; }
+    .chat-recipient { min-height: 49px; padding: 12px 14px; border-bottom: 1px solid var(--line); font-size: 11px; font-weight: 750; }
+    .chat-recipient small { display: block; margin-top: 3px; color: var(--muted); font-size: 9px; font-weight: 500; }
+    .chat-messages { display: flex; min-height: 0; flex: 1; flex-direction: column; gap: 9px; overflow-y: auto; padding: 14px; background: #f8f9f6; }
+    .chat-empty-state { display: grid; flex: 1; align-content: center; justify-items: center; padding: 18px; color: var(--muted); font-size: 11px; line-height: 1.55; text-align: center; }
+    .chat-empty-state strong { margin-bottom: 6px; color: var(--ink); font-size: 13px; }
+    .chat-message-row { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; }
+    .chat-message-row.mine { align-items: flex-end; }
+    .chat-bubble { max-width: 84%; padding: 9px 11px; border-radius: 12px 12px 12px 3px; color: #2f3c35; background: #fff; box-shadow: 0 1px 3px rgba(20,40,30,.07); font-size: 11px; line-height: 1.5; overflow-wrap: anywhere; white-space: pre-wrap; }
+    .chat-message-row.mine .chat-bubble { border-radius: 12px 12px 3px 12px; color: #fff; background: var(--green); }
+    .chat-time { color: #87918a; font-size: 8px; }
+    .chat-form { display: flex; align-items: end; gap: 8px; padding: 10px; border-top: 1px solid var(--line); background: #fff; }
+    .chat-form textarea { min-width: 0; min-height: 42px; max-height: 100px; flex: 1; resize: vertical; padding: 10px; border: 1px solid #dfe3db; border-radius: 9px; outline: none; font: inherit; font-size: 11px; line-height: 1.4; }
+    .chat-form textarea:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(22,75,59,.1); }
+    .chat-form .button { min-height: 40px; padding: 0 14px; font-size: 11px; }
+    .chat-notice { margin: 0; padding: 8px 12px; color: #78827b; background: #fff; font-size: 9px; line-height: 1.4; text-align: center; }
+    .toast { position: fixed; z-index: 12; right: 24px; bottom: 82px; max-width: min(360px, calc(100% - 48px)); padding: 13px 17px; border-radius: 10px; color: #fff; background: var(--green-dark); box-shadow: var(--shadow); font-size: 12px; opacity: 0; pointer-events: none; transform: translateY(10px); transition: opacity .2s ease, transform .2s ease; }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 940px) {
+      .hero-panel { grid-template-columns: 1.1fr .8fr; }
+      .hero-copy { padding-left: 36px; }
+      .hero-art { padding: 14px; }
+      .category-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+      .pricing-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+      .gig-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .main-nav { gap: 16px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { width: min(100% - 32px, 540px); }
+      .announcement { font-size: 10px; }
+      .header-main { min-height: 67px; }
+      .brand { font-size: 23px; }
+      .main-nav { display: none; position: absolute; top: 66px; left: 0; right: 0; align-items: stretch; gap: 0; padding: 8px 20px 16px; border-bottom: 1px solid var(--line); background: var(--paper); }
+      .main-nav.open { display: flex; flex-direction: column; }
+      .main-nav a { padding: 12px 0; border-bottom: 1px solid var(--line); }
+      .header-actions { margin-left: auto; gap: 4px; }
+      .header-actions .login-button { display: none; }
+      .header-actions .button { min-height: 37px; padding: 0 12px; font-size: 11px; }
+      .mobile-menu { display: grid; width: 37px; height: 37px; place-items: center; margin-left: 4px; border: 1px solid var(--line) !important; border-radius: 50%; }
+      .hero { padding: 22px 0 18px; }
+      .hero-panel { display: block; min-height: 0; border-radius: 17px; }
+      .hero-copy { padding: 34px 23px 10px; }
+      h1 { max-width: 460px; font-size: clamp(39px, 11vw, 58px); }
+      .hero-copy > p { margin: 15px 0 20px; font-size: 13px; }
+      .search-box { min-height: 53px; }
+      .search-box button { min-width: 78px; }
+      .search-box input { padding-inline: 8px; font-size: 11px; }
+      .search-icon { width: 19px; margin-left: 7px; }
+      .popular-searches { font-size: 10px; }
+      .hero-art { min-height: 270px; padding: 12px 20px 22px; }
+      .hero-photo { width: 190px; aspect-ratio: 1; border-radius: 50%; }
+      .hero-note-top { top: 16%; right: 3%; }
+      .hero-note-bottom { bottom: 8%; left: 1%; }
+      .trust-row { display: block; padding: 14px 3px 20px; text-align: center; }
+      .trust-names { justify-content: center; flex-wrap: wrap; gap: 13px 24px; margin-top: 14px; }
+      .trust-names span { font-size: 12px; }
+      section.content-section { padding: 37px 0; }
+      .section-heading { align-items: start; flex-direction: column; gap: 11px; margin-bottom: 20px; }
+      .section-heading > p { font-size: 12px; }
+      .category-grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
+      .category-card { min-height: 124px; padding: 14px; }
+      .pricing-grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 9px; }
+      .price-card { padding: 12px; }
+      .price-card-top { flex-direction: column; gap: 6px; }
+      .price-unit { text-align: left; }
+      .gig-controls { align-items: start; flex-direction: column; gap: 12px; margin-top: 20px; }
+      .filters { width: 100%; }
+      .sort-control { align-self: end; }
+      .gig-grid { gap: 11px; }
+      .gig-image-wrap { height: clamp(120px, 37vw, 180px); }
+      .gig-body { padding: 11px 10px 10px; }
+      .seller-line { gap: 6px; margin-bottom: 8px; }
+      .seller-avatar { width: 25px; height: 25px; }
+      .seller-name { font-size: 9px; }
+      .gig-title { font-size: 11px; min-height: 34px; }
+      .rating-row { margin-top: 6px; font-size: 10px; }
+      .gig-footer { margin-top: 9px; padding-top: 9px; }
+      .gig-price { font-size: 13px; }
+      .how-section { padding: 46px 0 52px; }
+      .steps { grid-template-columns: 1fr; gap: 10px; margin-top: 25px; }
+      .step-card { min-height: 145px; }
+      .step-card h3 { margin-top: 15px; }
+      .cta-band { align-items: start; flex-direction: column; margin: 34px 0; padding: 24px; }
+      .footer-top, .footer-bottom { align-items: start; flex-direction: column; }
+      .footer-links { gap: 14px; }
+      .chat-launcher { right: 16px; bottom: 16px; }
+      .chat-panel { right: 12px; bottom: 76px; width: calc(100vw - 24px); height: min(70vh, 560px); }
+      .chat-layout { grid-template-columns: 112px minmax(0,1fr); }
+      .chat-thread-button { padding: 10px 8px; }
+      .chat-messages { padding: 10px; }
+      .toast { right: 12px; bottom: 76px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="announcement"><strong>Make room for good work.</strong><span>Meet the people who make it happen.</span></div>
+  <header class="site-header">
+    <div class="wrap header-main">
+      <a class="brand" href="#" aria-label="Wefans home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none"><path d="M5 10.5 11 30h5l4-12 4 12h5l6-19.5h-5.4L27 24l-4.1-13.5h-5.6L13.2 24l-2.7-13.5H5Z" fill="currentColor"/><circle cx="32.5" cy="8" r="3.5" fill="#ff755d"/></svg>
+        </span>
+        <span>wefans</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <a href="#categories">Explore</a>
+        <a href="#talent">Find talent</a>
+        <a href="#freelance-pricing">Freelance prices</a>
+        <a href="#how-it-works">How it works</a>
+      </nav>
+      <div class="header-actions">
+        <button class="login-button" type="button" data-open-modal="login">Log in</button>
+        <button class="button button-dark" type="button" data-open-modal="join">Join Wefans</button>
+        <button class="mobile-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero-panel">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-dot"></span> A marketplace for people with ideas</div>
+          <h1>Good work starts with <em>your people.</em></h1>
+          <p>Find independent creatives, makers, and specialists who bring a little more heart to the work.</p>
+          <form class="search-box" id="search-form" role="search">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg>
+            <input id="search-input" type="search" aria-label="Search services" placeholder="Try “a thoughtful brand identity”">
+            <button type="submit">Find talent</button>
+          </form>
+          <div class="popular-searches"><span>Popular:</span>
+            <button type="button" data-query="brand identity">Brand identity</button>
+            <button type="button" data-query="web design">Web design</button>
+            <button type="button" data-query="illustration">Illustration</button>
+            <button type="button" data-query="SEO writing">SEO writing</button>
+            <button type="button" data-query="freelancer profile">Freelancer profiles</button>
+          </div>
+        </div>
+        <div class="hero-art" aria-label="Creative freelancers collaborating">
+          <div class="hero-photo">
+            <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=800&q=85" alt="Creative team sharing ideas around a table">
+          </div>
+          <div class="hero-note hero-note-top">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/></svg>
+            <span>Good ideas,<br>good people.</span>
+          </div>
+          <div class="hero-note hero-note-bottom">
+            <span class="avatar-stack" aria-hidden="true">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&q=75" alt="">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=75" alt="">
+              <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=80&q=75" alt="">
+              <span>+</span>
+            </span>
+            <span>People make<br>the difference</span>
+          </div>
+        </div>
+      </div>
+      <div class="wrap trust-row">
+        <span class="trust-label">Good people make good things for</span>
+        <div class="trust-names" aria-label="Example client brands"><span>northstar</span><span>commonfolk</span><span>FIELD NOTES</span><span>Sunday Co.</span><span>OPENHOUSE</span></div>
+      </div>
+    </section>
+
+    <section class="content-section" id="categories">
+      <div class="wrap">
+        <div class="section-heading">
+          <div><p class="section-kicker">Find your kind of talent</p><h2>What are you dreaming up?</h2></div>
+          <p>Explore 16 service areas and popular services in each, from creative work and marketing to technology, business, and learning.</p>
+        </div>
+        <div class="category-grid" id="category-grid"></div>
+      </div>
+    </section>
+
+    <section class="content-section" id="freelance-pricing">
+      <div class="wrap">
+        <div class="section-heading">
+          <div><p class="section-kicker">Freelancing services</p><h2>Support for your freelance business.</h2></div>
+          <p>From setting up your profile to finding a smoother way to run your work, explore common services and example starting prices.</p>
+        </div>
+        <div class="pricing-grid" id="freelance-pricing-grid"></div>
+        <p class="pricing-note"><strong>Pricing guide:</strong> These are illustrative USD starting prices for the Wefans prototype, not fixed quotes or Fiverr prices. Final rates vary by seller, scope, location, and deliverables. Listings below show separate sample seller prices.</p>
+      </div>
+    </section>
+
+    <section class="content-section gigs-section" id="talent">
+      <div class="wrap">
+        <div class="section-heading">
+          <div><p class="section-kicker">A few good finds</p><h2>People worth meeting.</h2></div>
+          <p>Explore sample freelancer profiles, specialties, ratings, and starting prices. Profile and review details are prototype examples.</p>
+        </div>
+        <div class="gig-controls">
+          <div class="filters" id="filters" aria-label="Filter talent by category"></div>
+          <label class="sort-control">Sort by
+            <select id="sort-select" aria-label="Sort talent">
+              <option value="featured">Featured</option>
+              <option value="rating">Top rated</option>
+              <option value="price-low">Price: low to high</option>
+              <option value="price-high">Price: high to low</option>
+            </select>
+          </label>
+        </div>
+        <div class="gig-grid" id="gig-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="how-section" id="how-it-works">
+      <div class="wrap">
+        <div class="section-heading">
+          <div><p class="section-kicker">Simple by design</p><h2>From “what if?” to “we did it.”</h2></div>
+          <p>Good collaborations don’t need to be complicated. Here’s how Wefans helps you get there.</p>
+        </div>
+        <div class="steps">
+          <article class="step-card"><span class="step-number">01</span><h3>Find your person</h3><p>Explore independent talent, compare their work, and find someone who understands your vision.</p></article>
+          <article class="step-card"><span class="step-number">02</span><h3>Make a plan together</h3><p>Talk through the details, agree on a timeline, and make sure you’re both excited to get started.</p></article>
+          <article class="step-card"><span class="step-number">03</span><h3>Make something good</h3><p>Share feedback along the way and bring your next big idea into the world, one step at a time.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <section class="cta-band">
+        <div><h2>Your next great collaboration is out there.</h2><p>Meet the independent talent who can help make it happen.</p></div>
+        <button class="button button-dark" type="button" data-open-modal="join">Meet your people <span aria-hidden="true">→</span></button>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-top">
+        <a class="brand" href="#" aria-label="Wefans home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><path d="M5 10.5 11 30h5l4-12 4 12h5l6-19.5h-5.4L27 24l-4.1-13.5h-5.6L13.2 24l-2.7-13.5H5Z" fill="currentColor"/><circle cx="32.5" cy="8" r="3.5" fill="#ff755d"/></svg></span><span>wefans</span></a>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="#categories">Explore</a><a href="#talent">Find talent</a><a href="#freelance-pricing">Freelance prices</a><a href="#how-it-works">How it works</a><a href="#" data-open-modal="seller">Become a seller</a><a href="#" data-open-modal="join">Join Wefans</a>
+        </nav>
+      </div>
+      <div class="footer-bottom"><span>© 2026 Wefans. Made for good work.</span><span>Independent people. Better together.</span></div>
+    </div>
+  </footer>
+
+  <div class="modal-backdrop" id="modal-backdrop" role="presentation">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" type="button" aria-label="Close dialog">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 6 12 12M18 6 6 18"/></svg>
+      </button>
+      <h2 id="modal-title"></h2>
+      <p id="modal-description"></p>
+      <div class="auth-tabs" id="auth-tabs" role="tablist" aria-label="Account access">
+        <button class="auth-tab" type="button" id="login-tab" role="tab" aria-controls="modal-form" aria-selected="false" data-auth-mode="login">Log in</button>
+        <button class="auth-tab" type="button" id="signup-tab" role="tab" aria-controls="modal-form" aria-selected="false" data-auth-mode="signup">Sign up</button>
+      </div>
+      <div class="profile-detail" id="profile-details" hidden></div>
+      <form class="modal-form" id="modal-form">
+        <label id="name-field">Your name<input name="name" autocomplete="name" placeholder="Alex Morgan" required></label>
+        <label>Email address<input name="email" type="email" autocomplete="email" placeholder="you@example.com" required></label>
+        <label>Password
+          <span class="password-control">
+            <input id="password-input" name="password" type="password" autocomplete="new-password" minlength="8" required>
+            <button class="password-toggle" type="button" aria-label="Show password" aria-pressed="false">Show</button>
+          </span>
+        </label>
+        <label id="confirm-password-field">Confirm password<input id="confirm-password-input" name="confirmPassword" type="password" autocomplete="new-password" minlength="8" required></label>
+        <div class="auth-options" id="login-options" hidden>
+          <label class="check-label"><input name="remember" type="checkbox">Remember me</label>
+          <button class="text-button" type="button" id="forgot-password">Forgot password?</button>
+        </div>
+        <label id="terms-field" class="check-label"><input name="terms" type="checkbox" required><span>I agree to Wefans’ Terms and Privacy Policy.</span></label>
+        <label id="role-field">I’m here to
+          <select name="role"><option value="hire">Find great talent</option><option value="sell">Offer my services</option></select>
+        </label>
+        <button class="button button-dark" type="submit" id="modal-submit">Create your account</button>
+      </form>
+    </section>
+  </div>
+  <button class="chat-launcher" id="chat-launcher" type="button" aria-expanded="false" aria-controls="chat-panel">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H6l-3 2 1-4.5a7.5 7.5 0 1 1 16-5Z"/><path d="M8 11h8M8 14h5"/></svg>
+    <span>Messages</span>
+  </button>
+  <section class="chat-panel" id="chat-panel" aria-label="Wefans messages" hidden>
+    <header class="chat-header">
+      <div><strong>Messages</strong><small>Local prototype · Not delivered to freelancers</small></div>
+      <button class="chat-close" id="chat-close" type="button" aria-label="Close messages">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 6 12 12M18 6 6 18"/></svg>
+      </button>
+    </header>
+    <div class="chat-layout">
+      <aside class="chat-sidebar" id="chat-list" aria-label="Conversations"></aside>
+      <div class="chat-main">
+        <div class="chat-recipient" id="chat-recipient"></div>
+        <div class="chat-empty-state" id="chat-empty-state"><strong>Start a conversation</strong>Choose a freelancer and select Contact on their profile to send a message.</div>
+        <div class="chat-messages" id="chat-messages" aria-live="polite" hidden></div>
+        <form class="chat-form" id="chat-form" hidden>
+          <textarea id="chat-input" maxlength="2000" rows="2" placeholder="Write a message..." aria-label="Write a message" required></textarea>
+          <button class="button button-dark" type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+    <p class="chat-notice">Messages are stored only in this browser and are not sent to freelancers.</p>
+  </section>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const freelanceServices = [
+      { name: "Freelancer profile review & setup", price: 45, unit: "per profile", description: "Profile structure, service positioning, and a practical improvement checklist." },
+      { name: "Profile bio & positioning writing", price: 35, unit: "per profile", description: "A clear, client-focused introduction shaped around your skills and niche." },
+      { name: "Gig or service listing creation", price: 40, unit: "per listing", description: "Service description, deliverables, FAQ, and package outline." },
+      { name: "Service listing SEO optimization", price: 55, unit: "per listing", description: "Keyword and title research with edits to help clients understand your offer." },
+      { name: "Proposal & pitch writing", price: 65, unit: "per proposal", description: "A tailored project proposal with scope, timeline, and next steps." },
+      { name: "Proposal editing & review", price: 35, unit: "per proposal", description: "Feedback on clarity, fit, tone, and how the work is presented." },
+      { name: "Freelancer portfolio design", price: 120, unit: "per portfolio", description: "A polished portfolio layout to present selected projects and services." },
+      { name: "Portfolio case study writing", price: 50, unit: "per case study", description: "A concise project story covering the challenge, approach, and outcome." },
+      { name: "Personal brand starter kit", price: 150, unit: "per project", description: "A consistent bio, profile messaging, and basic visual direction." },
+      { name: "Freelance niche & market research", price: 85, unit: "per project", description: "A practical overview of target clients, service opportunities, and competitors." },
+      { name: "Service pricing & package strategy", price: 70, unit: "per session", description: "Review your service scope and organize it into clear client packages." },
+      { name: "Client outreach strategy", price: 95, unit: "per plan", description: "A focused prospecting plan with outreach steps and follow-up guidance." },
+      { name: "Client onboarding workflow setup", price: 90, unit: "per setup", description: "A reusable process for intake, kickoff, approvals, and handoff." },
+      { name: "Client email & communication templates", price: 45, unit: "per set", description: "Reusable messages for inquiries, project updates, revisions, and delivery." },
+      { name: "Project management workspace setup", price: 85, unit: "per workspace", description: "A simple project board and workflow configured for your freelance work." },
+      { name: "Time management & productivity coaching", price: 40, unit: "per session", description: "One-to-one help planning workload, priorities, and a sustainable routine." },
+      { name: "Freelance admin support", price: 25, unit: "per hour", description: "Flexible help with scheduling, inbox organization, and document preparation." },
+      { name: "Invoice & contract document formatting", price: 45, unit: "per document", description: "Formatting and organizing documents you provide; not legal advice or drafting." },
+      { name: "Freelance business coaching", price: 60, unit: "per hour", description: "One-to-one guidance on goals, client relationships, and business routines." },
+      { name: "Monthly freelance operations support", price: 180, unit: "per month", description: "Ongoing admin and workflow support with an agreed monthly scope." }
+    ];
+
+    const categories = [
+      { name: "Graphics & Design", icon: "G+D", services: ["Logo & brand identity", "Illustration", "Packaging & labels", "Presentation design", "Architecture & interiors", "Fashion design", "Game art", "Product design"] },
+      { name: "Digital Marketing", icon: "DM", services: ["Social media marketing", "SEO", "Content marketing", "Email marketing", "Paid advertising", "Influencer marketing", "Affiliate marketing", "Local SEO"] },
+      { name: "Writing & Translation", icon: "W+T", services: ["Articles & blog posts", "SEO content writing", "Copywriting", "Ghostwriting", "Books & eBooks", "Product descriptions", "Translation & localization", "Editing & proofreading", "Resume & LinkedIn", "Technical writing & documentation", "Grant writing", "Press releases & PR", "Email & newsletters", "Scriptwriting", "UX & website writing", "Case studies", "APA citation formatting", "MLA citation formatting", "Chicago citation formatting", "Harvard referencing", "Research & source discovery", "Source summaries & annotated bibliographies"] },
+      { name: "Video & Animation", icon: "V+A", services: ["Video editing", "Explainer videos", "Short-form video", "2D & 3D animation", "Product videos", "Subtitles & captions", "Motion graphics"] },
+      { name: "Music & Audio", icon: "M+A", services: ["Voice over", "Podcast editing", "Mixing & mastering", "Music production", "Sound design", "Jingles & intros", "Session musicians"] },
+      { name: "Programming & Tech", icon: "P+T", services: ["Website development", "E-commerce", "Mobile apps", "WordPress", "AI integrations", "Chatbots", "QA & testing", "Cloud & DevOps"] },
+      { name: "AI Services", icon: "AI", services: ["AI chatbots", "AI app development", "AI art", "AI automation", "Prompt engineering", "AI content editing", "AI data services"] },
+      { name: "Business", icon: "BU", services: ["Virtual assistance", "Market research", "Business plans", "Customer care", "HR & recruiting", "Project management", "Presentations"] },
+      { name: "Data", icon: "DA", services: ["Data analysis", "Data visualization", "Data entry", "Data collection", "Dashboards", "Data cleaning", "Web research"] },
+      { name: "Photography", icon: "PH", services: ["Product photography", "Portraits", "Event photography", "Food photography", "Photo editing", "Real estate photography"] },
+      { name: "Lifestyle", icon: "LI", services: ["Online tutoring", "Fitness coaching", "Nutrition plans", "Travel planning", "Gaming", "Personal styling", "Arts & crafts"] },
+      { name: "Finance", icon: "FI", services: ["Bookkeeping", "Financial modeling", "Tax preparation", "Business valuation", "Financial consulting", "Crypto research"] },
+      { name: "Consulting", icon: "CO", services: ["Business strategy", "Marketing strategy", "Technology consulting", "Career advice", "HR consulting", "Sustainability"] },
+      { name: "Legal", icon: "LE", services: ["Contract drafting", "Legal research", "Business registration", "Trademark support", "Privacy policies", "Legal consulting"] },
+      { name: "Career & Learning", icon: "C+L", services: ["Career coaching", "Language lessons", "Interview preparation", "Online courses", "Study skills", "Resume writing"] },
+      { name: "Freelancing", icon: "FL", services: freelanceServices.map((service) => service.name) }
+    ];
+
+    const gigs = [
+      { id: 1, category: "Graphics & Design", title: "Build a brand identity that feels unmistakably you", tags: ["logo design", "branding"], name: "Maya Chen", level: "Independent designer", rating: 5.0, reviews: 124, price: 180, image: "photo-1558655146-d09347e92766", avatar: "photo-1534528741775-53994a69daeb" },
+      { id: 2, category: "Programming & Tech", title: "Design a welcoming website for your growing business", tags: ["website design", "UX design"], name: "Noah Williams", level: "Digital creative", rating: 4.9, reviews: 89, price: 240, image: "photo-1460925895917-afdab827c52f", avatar: "photo-1500648767791-00dcc994a43e" },
+      { id: 3, category: "Graphics & Design", title: "Draw custom illustrations with a little personality", tags: ["illustration", "custom art"], name: "Amara Okafor", level: "Illustrator & maker", rating: 5.0, reviews: 67, price: 95, image: "photo-1513364776144-60967b0f800f", avatar: "photo-1531123897727-8f129e1688ce" },
+      { id: 4, category: "Writing & Translation", title: "Find the right words for your brand and your people", tags: ["copywriting", "editing"], name: "Ellis Parker", level: "Writer & editor", rating: 4.9, reviews: 53, price: 75, image: "photo-1455390582262-044cdead277a", avatar: "photo-1506794778202-cad84cf45f1d" },
+      { id: 5, category: "Video & Animation", title: "Create a warm, human video for your next big launch", tags: ["video editing", "filmmaking"], name: "Sofia Reyes", level: "Filmmaker", rating: 4.8, reviews: 41, price: 320, image: "photo-1492619375914-88005aa9e8fb", avatar: "photo-1544005313-94ddf0286df2" },
+      { id: 6, category: "Digital Marketing", title: "Make a social content plan you can actually stick to", tags: ["social media", "content marketing"], name: "Jordan Lee", level: "Marketing partner", rating: 4.9, reviews: 102, price: 120, image: "photo-1552664730-d307ca884978", avatar: "photo-1507003211169-0a1dd7228f2d" },
+      { id: 7, category: "Graphics & Design", title: "Give your little shop a big-hearted visual refresh", tags: ["brand identity", "packaging"], name: "Priya Nair", level: "Brand storyteller", rating: 4.8, reviews: 76, price: 150, image: "photo-1542744094-3a31f272c490", avatar: "photo-1544005313-94ddf0286df2" },
+      { id: 8, category: "Programming & Tech", title: "Turn your idea into a clean, easy-to-use landing page", tags: ["web development", "landing page"], name: "Theo Martin", level: "Product designer", rating: 5.0, reviews: 36, price: 210, image: "photo-1507238691740-187a5b1d37b8", avatar: "photo-1506794778202-cad84cf45f1d" },
+      { id: 9, category: "Music & Audio", title: "Record a warm voice over that brings your script to life", tags: ["voice over", "audio"], name: "Nina Brooks", level: "Voice artist", rating: 4.9, reviews: 58, price: 85, image: "photo-1598488035139-bdbb2231ce04", avatar: "photo-1534528741775-53994a69daeb" },
+      { id: 10, category: "Music & Audio", title: "Polish your podcast with clean edits and thoughtful sound", tags: ["podcast editing", "mixing"], name: "Mateo Silva", level: "Audio producer", rating: 5.0, reviews: 44, price: 110, image: "photo-1590602847861-f357a9332bbc", avatar: "photo-1500648767791-00dcc994a43e" },
+      { id: 11, category: "AI Services", title: "Create a helpful AI assistant for your customer FAQs", tags: ["AI chatbot", "automation"], name: "Avery Patel", level: "AI workflow builder", rating: 4.9, reviews: 31, price: 280, image: "photo-1677442136019-21780ecad995", avatar: "photo-1531123897727-8f129e1688ce" },
+      { id: 12, category: "AI Services", title: "Connect your everyday tools with practical AI automation", tags: ["AI automation", "AI integration"], name: "Owen Brooks", level: "Automation specialist", rating: 4.8, reviews: 27, price: 190, image: "photo-1485827404703-89b55fcc595e", avatar: "photo-1506794778202-cad84cf45f1d" },
+      { id: 13, category: "Business", title: "Bring order to your inbox, calendar, and weekly to-dos", tags: ["virtual assistant", "administration"], name: "Lena Ortiz", level: "Virtual assistant", rating: 5.0, reviews: 112, price: 60, image: "photo-1497366754035-f200968a6e72", avatar: "photo-1544005313-94ddf0286df2" },
+      { id: 14, category: "Business", title: "Turn your early-stage idea into a clear business plan", tags: ["business plan", "market research"], name: "Ravi Shah", level: "Business planner", rating: 4.9, reviews: 48, price: 175, image: "photo-1556761175-b413da4baf72", avatar: "photo-1507003211169-0a1dd7228f2d" },
+      { id: 15, category: "Data", title: "Make your numbers easier to understand with a clear dashboard", tags: ["data visualization", "dashboard"], name: "Quinn Davis", level: "Data analyst", rating: 4.9, reviews: 62, price: 145, image: "photo-1551288049-bebda4e38f71", avatar: "photo-1500648767791-00dcc994a43e" },
+      { id: 16, category: "Data", title: "Clean and organize your spreadsheet or research dataset", tags: ["data cleaning", "data entry"], name: "Samira Ali", level: "Data specialist", rating: 4.8, reviews: 39, price: 70, image: "photo-1460925895917-afdab827c52f", avatar: "photo-1531123897727-8f129e1688ce" },
+      { id: 17, category: "Photography", title: "Create bright, polished photos for your product launch", tags: ["product photography", "photo editing"], name: "Harper James", level: "Product photographer", rating: 5.0, reviews: 73, price: 210, image: "photo-1526170375885-4d8ecf77b99f", avatar: "photo-1534528741775-53994a69daeb" },
+      { id: 18, category: "Photography", title: "Capture natural portraits that feel like the real you", tags: ["portrait photography", "retouching"], name: "Emi Tanaka", level: "Portrait photographer", rating: 4.9, reviews: 51, price: 135, image: "photo-1531058020387-3be344556be6", avatar: "photo-1544005313-94ddf0286df2" },
+      { id: 19, category: "Lifestyle", title: "Plan a thoughtful trip around your pace and interests", tags: ["travel planning", "itinerary"], name: "Kai Morgan", level: "Travel planner", rating: 4.8, reviews: 28, price: 55, image: "photo-1488646953014-85cb44e25828", avatar: "photo-1506794778202-cad84cf45f1d" },
+      { id: 20, category: "Lifestyle", title: "Get one-to-one language practice built around your goals", tags: ["language lessons", "tutoring"], name: "Lucia Ferreira", level: "Language tutor", rating: 5.0, reviews: 92, price: 35, image: "photo-1503676260728-1c00da094a0b", avatar: "photo-1531123897727-8f129e1688ce" },
+      { id: 21, category: "Finance", title: "Get your books in order with reliable monthly bookkeeping", tags: ["bookkeeping", "accounting"], name: "Morgan Price", level: "Bookkeeping partner", rating: 4.9, reviews: 46, price: 125, image: "photo-1554224155-6726b3ff858f", avatar: "photo-1500648767791-00dcc994a43e" },
+      { id: 22, category: "Finance", title: "Build a practical financial model for your next big decision", tags: ["financial modeling", "forecasting"], name: "Arjun Mehta", level: "Finance analyst", rating: 4.8, reviews: 34, price: 220, image: "photo-1460925895917-afdab827c52f", avatar: "photo-1507003211169-0a1dd7228f2d" },
+      { id: 23, category: "Consulting", title: "Find a clear next step with a focused strategy session", tags: ["business strategy", "consulting"], name: "Camille Reed", level: "Strategy consultant", rating: 5.0, reviews: 29, price: 160, image: "photo-1521737711867-e3b97375f902", avatar: "photo-1534528741775-53994a69daeb" },
+      { id: 24, category: "Consulting", title: "Get a second opinion on your marketing direction and plan", tags: ["marketing strategy", "marketing consulting"], name: "Devon Price", level: "Marketing advisor", rating: 4.9, reviews: 37, price: 140, image: "photo-1552664730-d307ca884978", avatar: "photo-1500648767791-00dcc994a43e" },
+      { id: 25, category: "Legal", title: "Have a business contract reviewed and clearly explained", tags: ["contract review", "legal consulting"], name: "Taylor Reed", level: "Legal professional", rating: 4.9, reviews: 22, price: 195, image: "photo-1505664194779-8beaceb93744", avatar: "photo-1531123897727-8f129e1688ce" },
+      { id: 26, category: "Legal", title: "Get practical help preparing your business registration", tags: ["business registration", "legal research"], name: "Jamie Cole", level: "Business services advisor", rating: 4.8, reviews: 18, price: 130, image: "photo-1450101499163-c8848c66ca85", avatar: "photo-1506794778202-cad84cf45f1d" },
+      { id: 27, category: "Career & Learning", title: "Practice for your next interview with a supportive coach", tags: ["career coaching", "interview preparation"], name: "Alex Kim", level: "Career coach", rating: 5.0, reviews: 64, price: 80, image: "photo-1521737711867-e3b97375f902", avatar: "photo-1544005313-94ddf0286df2" },
+      { id: 28, category: "Career & Learning", title: "Learn a new skill with lessons paced around your schedule", tags: ["online courses", "tutoring"], name: "Robin Ellis", level: "Learning coach", rating: 4.9, reviews: 43, price: 45, image: "photo-1501504905252-473c47e087f8", avatar: "photo-1500648767791-00dcc994a43e" },
+      { id: 29, category: "Graphics & Design", title: "Design packaging that makes your product stand out on the shelf", tags: ["packaging design", "product design"], name: "Nora Bell", level: "Packaging designer", rating: 4.9, reviews: 55, price: 165, image: "photo-1544816155-12df9643f363", avatar: "photo-1531123897727-8f129e1688ce" },
+      { id: 30, category: "Digital Marketing", title: "Give your website a practical SEO and content tune-up", tags: ["SEO", "content marketing"], name: "Elliot Green", level: "SEO specialist", rating: 4.8, reviews: 71, price: 115, image: "photo-1460925895917-afdab827c52f", avatar: "photo-1507003211169-0a1dd7228f2d" },
+      { id: 31, category: "Writing & Translation", title: "Translate your website copy into natural, fluent language", tags: ["translation", "localization"], name: "Mila Santos", level: "Translator & editor", rating: 5.0, reviews: 86, price: 90, image: "photo-1455390582262-044cdead277a", avatar: "photo-1544005313-94ddf0286df2" },
+      { id: 32, category: "Video & Animation", title: "Make a short, lively animation to explain your new product", tags: ["animation", "explainer video"], name: "Leo Fischer", level: "Motion designer", rating: 4.9, reviews: 33, price: 260, image: "photo-1492619375914-88005aa9e8fb", avatar: "photo-1500648767791-00dcc994a43e" },
+      { id: 33, category: "Programming & Tech", title: "Build a smooth online shop tailored to your products", tags: ["e-commerce", "web development"], name: "Riley Stone", level: "E-commerce developer", rating: 5.0, reviews: 47, price: 350, image: "photo-1522542550221-31fd19575a2d", avatar: "photo-1534528741775-53994a69daeb" },
+      { id: 34, category: "Business", title: "Get thoughtful help researching your next market opportunity", tags: ["market research", "business research"], name: "Casey Rivera", level: "Research partner", rating: 4.8, reviews: 26, price: 105, image: "photo-1556761175-b413da4baf72", avatar: "photo-1507003211169-0a1dd7228f2d" },
+      { id: 35, category: "Writing & Translation", title: "Write useful, search-friendly articles in your brand voice", tags: ["SEO writing", "blog posts", "content writing"], name: "Drew Carter", level: "SEO content writer", rating: 4.9, reviews: 57, price: 95, image: "photo-1455390582262-044cdead277a", avatar: "photo-1506794778202-cad84cf45f1d" },
+      { id: 36, category: "Writing & Translation", title: "Shape your idea into an engaging ebook or ghostwritten story", tags: ["ghostwriting", "ebook writing", "book writing"], name: "Iris Coleman", level: "Ghostwriter & editor", rating: 5.0, reviews: 42, price: 240, image: "photo-1519682337058-a94d519337bc", avatar: "photo-1531123897727-8f129e1688ce" },
+      { id: 37, category: "Writing & Translation", title: "Write clear product descriptions that sound like your brand", tags: ["product descriptions", "ecommerce copywriting"], name: "Jules Bennett", level: "Product copywriter", rating: 4.8, reviews: 38, price: 65, image: "photo-1455390582262-044cdead277a", avatar: "photo-1544005313-94ddf0286df2" },
+      { id: 38, category: "Writing & Translation", title: "Turn complex processes into friendly technical documentation", tags: ["technical writing", "documentation", "user guides"], name: "Morgan Ellis", level: "Technical writer", rating: 4.9, reviews: 31, price: 130, image: "photo-1455390582262-044cdead277a", avatar: "photo-1500648767791-00dcc994a43e" },
+      { id: 39, category: "Freelancing", title: "Polish your freelancer profile to show clients your strengths", tags: ["freelancer profile", "profile optimization"], name: "Sage Turner", level: "Freelance profile coach", rating: 5.0, reviews: 28, price: 75, image: "photo-1521737711867-e3b97375f902", avatar: "photo-1534528741775-53994a69daeb" },
+      { id: 40, category: "Freelancing", title: "Build a portfolio and proposal kit that helps you win projects", tags: ["freelance portfolio", "proposal writing"], name: "Rory Blake", level: "Freelance business coach", rating: 4.9, reviews: 34, price: 115, image: "photo-1522202176988-66273c2fd55f", avatar: "photo-1507003211169-0a1dd7228f2d" },
+      { id: 41, category: "Writing & Translation", title: "Format citations and references in APA, MLA, Chicago, or Harvard style", tags: ["APA formatting", "MLA style", "Chicago style", "Harvard referencing", "citation formatting"], bio: "Provides style-guide citation and reference formatting with a final consistency check; this service does not write or complete graded assignments.", name: "Sasha Morgan", level: "Citation & reference editor", rating: 4.9, reviews: 52, price: 30, image: "photo-1455390582262-044cdead277a", avatar: "photo-1534528741775-53994a69daeb" },
+      { id: 42, category: "Writing & Translation", title: "Find relevant sources and create concise research summaries", tags: ["research assistance", "source discovery", "research summaries", "annotated bibliography"], bio: "Helps locate relevant sources and prepare concise notes for independent study and research; clients complete their own coursework.", name: "Elena Brooks", level: "Research support editor", rating: 5.0, reviews: 37, price: 55, image: "photo-1455390582262-044cdead277a", avatar: "photo-1544005313-94ddf0286df2" }
+    ];
+
+    const grid = document.querySelector("#gig-grid");
+    const categoryGrid = document.querySelector("#category-grid");
+    const freelancePricingGrid = document.querySelector("#freelance-pricing-grid");
+    const searchInput = document.querySelector("#search-input");
+    const sortSelect = document.querySelector("#sort-select");
+    const filters = document.querySelector("#filters");
+    const backdrop = document.querySelector("#modal-backdrop");
+    const toast = document.querySelector("#toast");
+    const chatLauncher = document.querySelector("#chat-launcher");
+    const chatPanel = document.querySelector("#chat-panel");
+    const chatList = document.querySelector("#chat-list");
+    const chatRecipient = document.querySelector("#chat-recipient");
+    const chatMessages = document.querySelector("#chat-messages");
+    const chatForm = document.querySelector("#chat-form");
+    const chatInput = document.querySelector("#chat-input");
+    let activeCategory = "All";
+    let searchQuery = "";
+    let savedGigs = new Set();
+    let chatConversations = [];
+    let activeChatId = null;
+    let toastTimer;
+    let activeModal = "join";
+
+    function imageUrl(id, width) {
+      return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${width}&q=80`;
+    }
+
+    function getProfileDescription(gig) {
+      return gig.bio || `Specializes in ${gig.tags.join(", ")} and supports clients with ${gig.category.toLowerCase()} projects.`;
+    }
+
+    function renderCategories() {
+      categoryGrid.innerHTML = categories.map((category) => `
+        <button class="category-card" type="button" data-category="${category.name}">
+          <span class="category-icon" aria-hidden="true">${category.icon}</span>
+          <span><strong>${category.name}</strong><small>${category.services.join(" · ")}</small></span>
+          <span class="category-more">Browse ${category.services.length} services <span aria-hidden="true">→</span></span>
+        </button>`).join("");
+
+      filters.innerHTML = `<button class="filter-chip active" type="button" data-filter="All" aria-pressed="true">All services</button>` +
+        categories.map((category) => `<button class="filter-chip" type="button" data-filter="${category.name}" aria-pressed="false">${category.name}</button>`).join("");
+    }
+
+    function renderFreelancingPrices() {
+      freelancePricingGrid.innerHTML = freelanceServices.map((service) => `
+        <article class="price-card">
+          <div class="price-card-top">
+            <h3>${service.name}</h3>
+            <div><div class="price-value">From $${service.price}</div><span class="price-unit">${service.unit}</span></div>
+          </div>
+          <p>${service.description}</p>
+        </article>`).join("");
+    }
+
+    function renderGigs() {
+      const query = searchQuery.trim().toLowerCase();
+      let visible = gigs.filter((gig) => {
+        const categoryMatches = activeCategory === "All" || gig.category === activeCategory;
+        const searchable = `${gig.category} ${gig.title} ${gig.name} ${gig.level} ${gig.tags.join(" ")}`.toLowerCase();
+        return categoryMatches && (!query || searchable.includes(query));
+      });
+
+      const sortMode = sortSelect.value;
+      if (sortMode === "rating") visible = visible.slice().sort((a, b) => b.rating - a.rating || b.reviews - a.reviews);
+      if (sortMode === "price-low") visible = visible.slice().sort((a, b) => a.price - b.price);
+      if (sortMode === "price-high") visible = visible.slice().sort((a, b) => b.price - a.price);
+
+      if (!visible.length) {
+        grid.innerHTML = '<div class="empty-state"><strong>No matches just yet.</strong>Try a different search or browse all talent.</div>';
+        return;
+      }
+
+      grid.innerHTML = visible.map((gig) => `
+        <article class="gig-card">
+          <div class="gig-image-wrap">
+            <img class="gig-image" src="${imageUrl(gig.image, 650)}" alt="${gig.category} project example" loading="lazy">
+            <button class="save-button${savedGigs.has(gig.id) ? " saved" : ""}" type="button" data-save="${gig.id}" aria-label="${savedGigs.has(gig.id) ? "Remove saved service" : "Save service"}" aria-pressed="${savedGigs.has(gig.id)}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 8.7c0 4.2-8.8 10-8.8 10s-8.8-5.8-8.8-10a4.7 4.7 0 0 1 8.8-2.2 4.7 4.7 0 0 1 8.8 2.2Z"/></svg>
+            </button>
+          </div>
+          <div class="gig-body">
+            <div class="seller-line">
+              <img class="seller-avatar" src="${imageUrl(gig.avatar, 90)}" alt="" loading="lazy">
+              <span><button class="seller-name profile-link" type="button" data-profile="${gig.id}" aria-label="View ${gig.name}'s profile">${gig.name}</button><span class="seller-level">${gig.level}</span></span>
+            </div>
+            <p class="seller-profile-preview">${getProfileDescription(gig)}</p>
+            <a class="gig-title" href="#contact" data-gig="${gig.id}">${gig.title}</a>
+            <div class="rating-row"><span class="rating-star" aria-hidden="true">★</span><span class="rating-score">${gig.rating.toFixed(1)}</span><span class="rating-count">(${gig.reviews})</span></div>
+            <div class="gig-footer"><small>Starting at</small><span class="gig-price"><span>from</span>$${gig.price}</span></div>
+          </div>
+        </article>`).join("");
+    }
+
+    function setCategory(category) {
+      activeCategory = category;
+      filters.querySelectorAll(".filter-chip").forEach((button) => {
+        const isActive = button.dataset.filter === category;
+        button.classList.toggle("active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+      });
+      renderGigs();
+      document.querySelector("#talent").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      window.clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(() => toast.classList.remove("show"), 2800);
+    }
+
+    function loadChatConversations() {
+      try {
+        const saved = window.localStorage.getItem("wefans-chat-conversations-v1");
+        if (!saved) return [];
+        const parsed = JSON.parse(saved);
+        const valid = Array.isArray(parsed) && parsed.every((conversation) =>
+          Number.isInteger(conversation.freelancerId) &&
+          typeof conversation.freelancerName === "string" &&
+          typeof conversation.category === "string" &&
+          typeof conversation.updatedAt === "string" &&
+          Array.isArray(conversation.messages) &&
+          conversation.messages.every((message) =>
+            typeof message.text === "string" &&
+            typeof message.sentAt === "string" &&
+            (message.sender === "client" || message.sender === "freelancer")));
+        if (!valid) throw new TypeError("Saved conversation data has an invalid shape.");
+        return parsed;
+      } catch (error) {
+        console.error("Could not load Wefans conversations.", error);
+        showToast("Saved conversations could not be loaded. Check this site's browser storage.");
+        return [];
+      }
+    }
+
+    function saveChatConversations(conversations) {
+      try {
+        window.localStorage.setItem("wefans-chat-conversations-v1", JSON.stringify(conversations));
+        return true;
+      } catch (error) {
+        console.error("Could not save Wefans conversations.", error);
+        showToast("Message not saved. Browser storage is unavailable.");
+        return false;
+      }
+    }
+
+    function renderChatList() {
+      chatList.replaceChildren();
+      const heading = document.createElement("p");
+      heading.className = "chat-sidebar-title";
+      heading.textContent = "Conversations";
+      chatList.append(heading);
+
+      if (!chatConversations.length) {
+        const empty = document.createElement("p");
+        empty.className = "chat-empty-list";
+        empty.textContent = "Contact a freelancer to start a conversation.";
+        chatList.append(empty);
+        return;
+      }
+
+      const sorted = chatConversations.slice().sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+      sorted.forEach((conversation) => {
+        const button = document.createElement("button");
+        button.className = `chat-thread-button${conversation.freelancerId === activeChatId ? " active" : ""}`;
+        button.type = "button";
+        button.dataset.chatId = String(conversation.freelancerId);
+
+        const name = document.createElement("strong");
+        name.textContent = conversation.freelancerName;
+        const preview = document.createElement("span");
+        const latestMessage = conversation.messages[conversation.messages.length - 1];
+        preview.textContent = latestMessage ? latestMessage.text : "New conversation";
+        button.append(name, preview);
+        chatList.append(button);
+      });
+    }
+
+    function renderChatThread() {
+      const emptyState = document.querySelector("#chat-empty-state");
+      const conversation = chatConversations.find((item) => item.freelancerId === activeChatId);
+      chatMessages.replaceChildren();
+
+      if (!conversation) {
+        chatRecipient.textContent = "No conversation selected";
+        emptyState.hidden = false;
+        chatMessages.hidden = true;
+        chatForm.hidden = true;
+        return;
+      }
+
+      chatRecipient.replaceChildren();
+      const recipientName = document.createElement("span");
+      recipientName.textContent = conversation.freelancerName;
+      const recipientCategory = document.createElement("small");
+      recipientCategory.textContent = conversation.category;
+      chatRecipient.append(recipientName, recipientCategory);
+
+      conversation.messages.forEach((message) => {
+        const row = document.createElement("div");
+        row.className = `chat-message-row${message.sender === "client" ? " mine" : ""}`;
+        const bubble = document.createElement("div");
+        bubble.className = "chat-bubble";
+        bubble.textContent = message.text;
+        const time = document.createElement("time");
+        time.className = "chat-time";
+        time.dateTime = message.sentAt;
+        time.textContent = new Date(message.sentAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+        row.append(bubble, time);
+        chatMessages.append(row);
+      });
+
+      emptyState.hidden = true;
+      chatMessages.hidden = false;
+      chatForm.hidden = false;
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function openChatFor(gig) {
+      let conversation = chatConversations.find((item) => item.freelancerId === gig.id);
+      if (!conversation) {
+        conversation = {
+          freelancerId: gig.id,
+          freelancerName: gig.name,
+          category: gig.category,
+          updatedAt: new Date().toISOString(),
+          messages: []
+        };
+        const nextConversations = [...chatConversations, conversation];
+        if (!saveChatConversations(nextConversations)) return;
+        chatConversations = nextConversations;
+      }
+
+      activeChatId = gig.id;
+      chatPanel.hidden = false;
+      chatLauncher.setAttribute("aria-expanded", "true");
+      renderChatList();
+      renderChatThread();
+      window.setTimeout(() => chatInput.focus(), 0);
+    }
+
+    function setAuthMode(mode) {
+      activeModal = mode;
+      const title = document.querySelector("#modal-title");
+      const description = document.querySelector("#modal-description");
+      const nameField = document.querySelector("#name-field");
+      const roleField = document.querySelector("#role-field");
+      const confirmField = document.querySelector("#confirm-password-field");
+      const loginOptions = document.querySelector("#login-options");
+      const termsField = document.querySelector("#terms-field");
+      const submit = document.querySelector("#modal-submit");
+      const nameInput = nameField.querySelector("input");
+      const isLogin = mode === "login";
+      title.textContent = isLogin ? "Welcome back." : "Create your Wefans account.";
+      description.textContent = isLogin
+        ? "Sign in to continue finding your people."
+        : "Join as a client or freelancer and make good work happen.";
+      nameField.hidden = isLogin;
+      nameInput.disabled = isLogin;
+      roleField.hidden = isLogin;
+      roleField.querySelector("select").disabled = isLogin;
+      confirmField.hidden = isLogin;
+      confirmField.querySelector("input").disabled = isLogin;
+      confirmField.querySelector("input").setCustomValidity("");
+      loginOptions.hidden = !isLogin;
+      termsField.hidden = isLogin;
+      termsField.querySelector("input").disabled = isLogin;
+      document.querySelector("#password-input").autocomplete = isLogin ? "current-password" : "new-password";
+      submit.textContent = isLogin ? "Log in" : "Create account";
+      document.querySelectorAll("[data-auth-mode]").forEach((tab) => {
+        const selected = tab.dataset.authMode === mode;
+        tab.classList.toggle("active", selected);
+        tab.setAttribute("aria-selected", String(selected));
+      });
+    }
+
+    function openModal(type) {
+      const mode = type === "login" ? "login" : "signup";
+      document.querySelector("#profile-details").hidden = true;
+      document.querySelector("#auth-tabs").hidden = false;
+      document.querySelector("#modal-form").hidden = false;
+      setAuthMode(mode);
+      const roleSelect = document.querySelector("#role-field select");
+      roleSelect.value = type === "seller" ? "sell" : "hire";
+      if (type === "seller") {
+        document.querySelector("#modal-description").textContent = "Create a freelancer account to introduce your services to Wefans clients.";
+      }
+
+      const passwordInput = document.querySelector("#password-input");
+      passwordInput.type = "password";
+      const passwordToggle = document.querySelector(".password-toggle");
+      passwordToggle.textContent = "Show";
+      passwordToggle.setAttribute("aria-label", "Show password");
+      passwordToggle.setAttribute("aria-pressed", "false");
+      backdrop.classList.add("open");
+      document.body.style.overflow = "hidden";
+      window.setTimeout(() => (mode === "login"
+        ? backdrop.querySelector('input[type="email"]')
+        : document.querySelector("#name-field input")).focus(), 0);
+    }
+
+    function openProfile(gig) {
+      activeModal = "profile";
+      document.querySelector("#auth-tabs").hidden = true;
+      document.querySelector("#modal-title").textContent = gig.name;
+      document.querySelector("#modal-description").textContent = `${gig.level} · ${gig.category}`;
+      document.querySelector("#modal-form").hidden = true;
+
+      const details = document.querySelector("#profile-details");
+      details.innerHTML = `
+        <div class="profile-rating"><span class="rating-star" aria-hidden="true">★</span><strong>${gig.rating.toFixed(1)}</strong><span>(${gig.reviews} sample reviews)</span></div>
+        <h3>About</h3>
+        <p>${gig.bio || `${gig.name} is a ${gig.level.toLowerCase()} specializing in ${gig.tags.join(", ")}. They support clients with ${gig.category.toLowerCase()} projects and focus on clear communication and thoughtful delivery.`}</p>
+        <h3>Specialties</h3>
+        <div class="profile-tags">${gig.tags.map((tag) => `<span>${tag}</span>`).join("")}</div>
+        <div class="profile-service"><small>Featured service</small><strong>${gig.title}</strong><span>Starting at $${gig.price}</span></div>
+        <button class="button button-dark profile-contact" type="button" data-contact-profile="${gig.id}">Contact ${gig.name}</button>`;
+      details.hidden = false;
+      backdrop.classList.add("open");
+      document.body.style.overflow = "hidden";
+      document.querySelector(".modal-close").focus();
+    }
+
+    function closeModal() {
+      backdrop.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    document.querySelector("#search-form").addEventListener("submit", (event) => {
+      event.preventDefault();
+      searchQuery = searchInput.value;
+      renderGigs();
+      document.querySelector("#talent").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    document.querySelectorAll("[data-query]").forEach((button) => {
+      button.addEventListener("click", () => {
+        searchInput.value = button.dataset.query;
+        searchQuery = button.dataset.query;
+        renderGigs();
+        document.querySelector("#talent").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    categoryGrid.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-category]");
+      if (button) setCategory(button.dataset.category);
+    });
+
+    filters.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-filter]");
+      if (button) setCategory(button.dataset.filter);
+    });
+
+    sortSelect.addEventListener("change", renderGigs);
+
+    grid.addEventListener("click", (event) => {
+      const saveButton = event.target.closest("[data-save]");
+      if (saveButton) {
+        const id = Number(saveButton.dataset.save);
+        if (savedGigs.has(id)) {
+          savedGigs.delete(id);
+          showToast("Removed from your saved services.");
+        } else {
+          savedGigs.add(id);
+          showToast("Saved for later.");
+        }
+        renderGigs();
+        return;
+      }
+
+      const profileButton = event.target.closest("[data-profile]");
+      if (profileButton) {
+        const gig = gigs.find((item) => item.id === Number(profileButton.dataset.profile));
+        if (gig) openProfile(gig);
+        return;
+      }
+
+      const gigLink = event.target.closest("[data-gig]");
+      if (gigLink) {
+        event.preventDefault();
+        const gig = gigs.find((item) => item.id === Number(gigLink.dataset.gig));
+        if (gig) openProfile(gig);
+      }
+    });
+
+    document.querySelector("#profile-details").addEventListener("click", (event) => {
+      const contactButton = event.target.closest("[data-contact-profile]");
+      if (!contactButton) return;
+      const gig = gigs.find((item) => item.id === Number(contactButton.dataset.contactProfile));
+      closeModal();
+      if (gig) openChatFor(gig);
+    });
+
+    chatLauncher.addEventListener("click", () => {
+      chatPanel.hidden = !chatPanel.hidden;
+      chatLauncher.setAttribute("aria-expanded", String(!chatPanel.hidden));
+      if (!chatPanel.hidden) {
+        renderChatList();
+        renderChatThread();
+      }
+    });
+
+    document.querySelector("#chat-close").addEventListener("click", () => {
+      chatPanel.hidden = true;
+      chatLauncher.setAttribute("aria-expanded", "false");
+    });
+
+    chatList.addEventListener("click", (event) => {
+      const conversationButton = event.target.closest("[data-chat-id]");
+      if (!conversationButton) return;
+      activeChatId = Number(conversationButton.dataset.chatId);
+      renderChatList();
+      renderChatThread();
+    });
+
+    chatForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const text = chatInput.value.trim();
+      if (!text) return;
+
+      const current = chatConversations.find((item) => item.freelancerId === activeChatId);
+      if (!current) return;
+      const updatedAt = new Date().toISOString();
+      const updatedConversations = chatConversations.map((conversation) =>
+        conversation.freelancerId === activeChatId
+          ? {
+            ...conversation,
+            updatedAt,
+            messages: [...conversation.messages, { sender: "client", text, sentAt: updatedAt }]
+          }
+          : conversation);
+      if (!saveChatConversations(updatedConversations)) return;
+
+      chatConversations = updatedConversations;
+      chatInput.value = "";
+      renderChatList();
+      renderChatThread();
+    });
+
+    document.querySelectorAll("[data-open-modal]").forEach((element) => {
+      element.addEventListener("click", (event) => {
+        if (element.tagName === "A") event.preventDefault();
+        openModal(element.dataset.openModal);
+      });
+    });
+
+    document.querySelector(".modal-close").addEventListener("click", closeModal);
+    backdrop.addEventListener("click", (event) => {
+      if (event.target === backdrop) closeModal();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && backdrop.classList.contains("open")) closeModal();
+    });
+
+    document.querySelector("#modal-form").addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (activeModal === "signup") {
+        const password = document.querySelector("#password-input");
+        const confirmation = document.querySelector("#confirm-password-input");
+        if (password.value !== confirmation.value) {
+          confirmation.setCustomValidity("Passwords do not match.");
+          confirmation.reportValidity();
+          return;
+        }
+      }
+      closeModal();
+      showToast(activeModal === "login"
+        ? "Login is a prototype interface; authentication is not connected yet."
+        : "Sign-up is a prototype interface; account creation is not connected yet.");
+      event.currentTarget.reset();
+    });
+
+    document.querySelectorAll("[data-auth-mode]").forEach((tab) => {
+      tab.addEventListener("click", () => setAuthMode(tab.dataset.authMode));
+    });
+
+    document.querySelector(".password-toggle").addEventListener("click", (event) => {
+      const password = document.querySelector("#password-input");
+      const visible = password.type === "password";
+      password.type = visible ? "text" : "password";
+      event.currentTarget.textContent = visible ? "Hide" : "Show";
+      event.currentTarget.setAttribute("aria-label", visible ? "Hide password" : "Show password");
+      event.currentTarget.setAttribute("aria-pressed", String(visible));
+    });
+
+    const confirmationInput = document.querySelector("#confirm-password-input");
+    const validatePasswordMatch = () => {
+      const password = document.querySelector("#password-input").value;
+      confirmationInput.setCustomValidity(confirmationInput.value && confirmationInput.value !== password
+        ? "Passwords do not match."
+        : "");
+    };
+    document.querySelector("#password-input").addEventListener("input", validatePasswordMatch);
+    confirmationInput.addEventListener("input", validatePasswordMatch);
+    document.querySelector("#forgot-password").addEventListener("click", () => {
+      showToast("Password reset will be available when authentication is connected.");
+    });
+
+    const mobileMenu = document.querySelector(".mobile-menu");
+    mobileMenu.addEventListener("click", () => {
+      const nav = document.querySelector("#main-nav");
+      const expanded = mobileMenu.getAttribute("aria-expanded") === "true";
+      mobileMenu.setAttribute("aria-expanded", String(!expanded));
+      nav.classList.toggle("open", !expanded);
+    });
+    document.querySelectorAll("#main-nav a").forEach((link) => {
+      link.addEventListener("click", () => {
+        document.querySelector("#main-nav").classList.remove("open");
+        mobileMenu.setAttribute("aria-expanded", "false");
+      });
+    });
+
+    chatConversations = loadChatConversations();
+    renderChatList();
+    renderChatThread();
+    renderCategories();
+    renderFreelancingPrices();
+    renderGigs();
+  </script>
+</body>
+</html>
