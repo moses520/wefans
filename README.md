@@ -9,19 +9,20 @@ A static creative-services marketplace with optional Supabase authentication, pu
 - `supabase-config.js` - public Supabase project URL and publishable/anon key.
 - `supabase-schema.sql` - database tables, triggers, grants, and row-level security policies.
 
-## Connect Supabase
+## Supabase setup
 
-1. Create a Supabase project.
-2. In the Supabase SQL Editor, run the contents of `supabase-schema.sql`.
-3. In `supabase-config.js`, set `url` to the project's URL and `anonKey` to its publishable key (or legacy anon key).
-4. In Supabase **Authentication > URL Configuration**, set the site URL to `https://moses520.github.io/wefans/` and add `http://localhost:8000/` as a redirect URL for local testing.
-5. Upload the updated Wefans files to the repository and wait for GitHub Pages to redeploy.
+The live Wefans site is connected to its Supabase project. Its schema is in `supabase-schema.sql`; it creates profiles, freelancer listings, private conversations, messages, realtime updates, and row-level security policies.
 
-The browser key is designed for public use; the database's row-level security policies protect user data. **Never put a Supabase `service_role` or secret key in this website or repository.** Run the SQL schema before connecting the project. Email confirmation may be enabled in the Supabase Auth settings.
+For a separate deployment or fork:
 
-Once connected, people can sign up as clients or freelancers, freelancers can update their public profile and publish services, and authenticated conversation participants can exchange persistent realtime messages.
+1. Create a Supabase project and run `supabase-schema.sql` in its SQL Editor.
+2. Set `url` and `anonKey` in `supabase-config.js` to that project's URL and **publishable** key (or legacy anon key).
+3. In Supabase **Authentication > URL Configuration**, set the site URL to your deployed site and add `http://localhost:8000/` as a redirect URL for local testing.
+4. Upload the updated files and wait for GitHub Pages to redeploy.
 
-The checked-in configuration is intentionally blank. Until you add your own project URL and public key, the site continues to show sample listings and database features remain disabled.
+The checked-in config contains only the Wefans project URL and public publishable key. **Never put a Supabase `service_role` or secret key in this website or repository.** Row-level security policies protect user data.
+
+Once connected, people can sign up as clients or freelancers, freelancers can update their public profile and publish services, and authenticated conversation participants can exchange persistent realtime messages. Email confirmation may be enabled in Supabase Auth settings.
 
 ## Publish with GitHub Pages
 
