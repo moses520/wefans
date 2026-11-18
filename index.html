@@ -190,6 +190,8 @@
     .gig-footer small { color: var(--muted); font-size: 9px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
     .gig-price { font-size: 15px; font-weight: 800; }
     .gig-price span { margin-right: 3px; color: #77817b; font-size: 9px; font-weight: 600; }
+    .gig-chat-button { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; min-height: 34px; padding: 0 11px; border: 1px solid #d9e3d8; border-radius: 999px; color: var(--green); background: #fff; font-size: 10px; font-weight: 750; cursor: pointer; }
+    .gig-chat-button:hover { border-color: var(--green); background: #f2f6ee; }
     .empty-state { grid-column: 1 / -1; padding: 44px 20px; border: 1px dashed #cbd4c8; border-radius: 14px; color: var(--muted); text-align: center; }
     .empty-state strong { display: block; margin-bottom: 7px; color: var(--ink); font-size: 16px; }
 
@@ -203,6 +205,7 @@
     .step-card h3 { margin: 20px 0 8px; font-size: 16px; letter-spacing: -.02em; }
     .step-card p { max-width: 280px; margin: 0; color: rgba(255,255,255,.68); font-size: 12px; line-height: 1.6; }
     .cta-band { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin: 58px 0; padding: 31px 36px; border-radius: 18px; background: #e9f1dc; }
+    .contact-band { margin: 0; }
     .cta-band h2 { max-width: 570px; font-size: clamp(25px, 3vw, 34px); }
     .cta-band p { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
     .cta-band .button { flex: 0 0 auto; }
@@ -407,6 +410,7 @@
         <a href="#talent">Find talent</a>
         <a href="#freelance-pricing">Freelance prices</a>
         <a href="#how-it-works">How it works</a>
+        <a href="#contact">Contact</a>
       </nav>
       <div class="header-actions">
         <span class="account-name" id="account-name" hidden></span>
@@ -529,6 +533,19 @@
       </section>
     </div>
 
+    <section class="content-section" id="contact">
+      <div class="wrap">
+        <div class="section-heading">
+          <div><p class="section-kicker">Contact</p><h2>Ready to start a conversation?</h2></div>
+          <p>Message freelancers directly from their profiles, or open your inbox to continue an existing conversation.</p>
+        </div>
+        <div class="cta-band contact-band">
+          <div><h2>Let's talk about your project.</h2><p>Your private Wefans conversations are all in one place.</p></div>
+          <button class="button button-dark" id="contact-messages-button" type="button">Open messages <span aria-hidden="true">→</span></button>
+        </div>
+      </div>
+    </section>
+
     <section class="dashboard-section" id="seller-dashboard" hidden>
       <div class="wrap">
         <div class="section-heading">
@@ -589,7 +606,7 @@
       <div class="footer-top">
         <a class="brand" href="#" aria-label="Wefans home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><path d="M5 10.5 11 30h5l4-12 4 12h5l6-19.5h-5.4L27 24l-4.1-13.5h-5.6L13.2 24l-2.7-13.5H5Z" fill="currentColor"/><circle cx="32.5" cy="8" r="3.5" fill="#ff755d"/></svg></span><span>wefans</span></a>
         <nav class="footer-links" aria-label="Footer navigation">
-          <a href="#categories">Explore</a><a href="#talent">Find talent</a><a href="#freelance-pricing">Freelance prices</a><a href="#how-it-works">How it works</a><a href="#" data-open-modal="seller">Become a seller</a><a href="#" data-open-modal="join">Join Wefans</a>
+          <a href="#categories">Explore</a><a href="#talent">Find talent</a><a href="#freelance-pricing">Freelance prices</a><a href="#how-it-works">How it works</a><a href="#contact">Contact</a><a href="#" data-open-modal="seller">Become a seller</a><a href="#" data-open-modal="join">Join Wefans</a>
         </nav>
       </div>
       <div class="footer-bottom"><span>© 2026 Wefans. Made for good work.</span><span>Independent people. Better together.</span></div>
@@ -870,7 +887,10 @@
             ${Number.isFinite(gig.rating)
               ? `<div class="rating-row"><span class="rating-star" aria-hidden="true">★</span><span class="rating-score">${gig.rating.toFixed(1)}</span><span class="rating-count">(${gig.reviews})</span></div>`
               : '<div class="rating-row"><span class="rating-count">New seller</span></div>'}
-            <div class="gig-footer"><small>Starting at</small><span class="gig-price"><span>from</span>$${formatPrice(gig.price)}</span></div>
+            <div class="gig-footer">
+              <div><small>Starting at</small><span class="gig-price"><span>from</span>$${formatPrice(gig.price)}</span></div>
+              <button class="gig-chat-button" type="button" data-contact-gig="${escapeHtml(gig.id)}" aria-label="Message ${escapeHtml(gig.name)}">Message</button>
+            </div>
           </div>
         </article>`).join("");
     }
@@ -1007,53 +1027,40 @@
       );
     }
 
-    async function openChatFor(gig) {
+    function openMessagesPage(gig) {
+      const url = new URL("messages.html", window.location.href);
+      if (gig) {
+        if (gig.isSample || !gig.freelancerId) {
+          url.searchParams.set("sampleName", gig.name);
+        } else {
+          url.searchParams.set("freelancerId", gig.freelancerId);
+          url.searchParams.set("category", gig.category);
+        }
+      }
+      window.location.assign(url.href);
+    }
+
+    function openChatFor(gig) {
+      openMessagesPage(gig);
+    }
+
+    async function openMessageCenter() {
       if (!window.WefansDB.isReady()) {
         showToast("Connect Supabase before messaging. See README.md for setup.");
         return;
       }
-      if (gig.isSample || !gig.freelancerId) {
-        showToast("This is a sample listing. Message a freelancer after they publish a real service.");
-        return;
-      }
       if (!currentUser) {
         openModal("login");
-        showToast("Log in to message this freelancer.");
-        return;
-      }
-      if (!currentProfile) {
-        showToast("Your account is still loading. Please try again.");
-        return;
-      }
-      if (currentProfile.role !== "client") {
-        showToast("Client accounts can start conversations with freelancers.");
-        return;
-      }
-      if (gig.freelancerId === currentUser.id) {
-        showToast("You cannot start a conversation with your own service.");
+        showToast("Log in to view your messages.");
         return;
       }
 
+      chatPanel.hidden = false;
+      chatLauncher.setAttribute("aria-expanded", "true");
       try {
-        const row = await window.WefansDB.getOrCreateConversation(gig.freelancerId, gig.category);
-        const conversation = {
-          id: row.id,
-          freelancerId: row.freelancer_id,
-          freelancerName: row.freelancer_display_name,
-          category: row.category,
-          updatedAt: row.updated_at,
-          messages: []
-        };
-        const existingIndex = chatConversations.findIndex((item) => item.id === conversation.id);
-        if (existingIndex < 0) chatConversations.unshift(conversation);
-        else chatConversations[existingIndex] = { ...chatConversations[existingIndex], ...conversation };
-
-        chatPanel.hidden = false;
-        chatLauncher.setAttribute("aria-expanded", "true");
-        await activateConversation(conversation.id);
-        window.setTimeout(() => chatInput.focus(), 0);
+        await loadChatConversations();
       } catch (error) {
-        reportDatabaseError("Opening conversation", error);
+        reportDatabaseError("Loading conversations", error);
       }
     }
 
@@ -1142,7 +1149,7 @@
         <h3>Specialties</h3>
         <div class="profile-tags">${tags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}</div>
         <div class="profile-service"><small>Featured service</small><strong>${escapeHtml(gig.title)}</strong><span>Starting at $${formatPrice(gig.price)}</span></div>
-        <button class="button button-dark profile-contact" type="button" data-contact-profile="${escapeHtml(gig.id)}">Contact ${escapeHtml(gig.name)}</button>`;
+        <button class="button button-dark profile-contact" type="button" data-contact-profile="${escapeHtml(gig.id)}">Message ${escapeHtml(gig.name)}</button>`;
       details.hidden = false;
       backdrop.classList.add("open");
       document.body.style.overflow = "hidden";
@@ -1334,6 +1341,13 @@
     sortSelect.addEventListener("change", renderGigs);
 
     grid.addEventListener("click", (event) => {
+      const contactButton = event.target.closest("[data-contact-gig]");
+      if (contactButton) {
+        const gig = allGigs().find((item) => String(item.id) === contactButton.dataset.contactGig);
+        if (gig) openChatFor(gig);
+        return;
+      }
+
       const saveButton = event.target.closest("[data-save]");
       if (saveButton) {
         const id = saveButton.dataset.save;
@@ -1372,26 +1386,15 @@
     });
 
     chatLauncher.addEventListener("click", async () => {
-      if (!window.WefansDB.isReady()) {
-        showToast("Connect Supabase before messaging. See README.md for setup.");
+      if (chatPanel.hidden) {
+        await openMessageCenter();
         return;
       }
-      if (!currentUser) {
-        openModal("login");
-        showToast("Log in to view your messages.");
-        return;
-      }
-
-      chatPanel.hidden = !chatPanel.hidden;
-      chatLauncher.setAttribute("aria-expanded", String(!chatPanel.hidden));
-      if (!chatPanel.hidden) {
-        try {
-          await loadChatConversations();
-        } catch (error) {
-          reportDatabaseError("Loading conversations", error);
-        }
-      }
+      chatPanel.hidden = true;
+      chatLauncher.setAttribute("aria-expanded", "false");
     });
+
+    document.querySelector("#contact-messages-button").addEventListener("click", () => openMessagesPage());
 
     document.querySelector("#chat-close").addEventListener("click", () => {
       chatPanel.hidden = true;
