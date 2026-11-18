@@ -5,6 +5,7 @@ A static creative-services marketplace with optional Supabase authentication, pu
 ## Files
 
 - `index.html` - website and browser interactions.
+- `messages.html` and `messages-app.js` - full-page private conversation inbox and chat.
 - `supabase-client.js` - browser-side Supabase integration.
 - `supabase-config.js` - public Supabase project URL and publishable/anon key.
 - `supabase-schema.sql` - database tables, triggers, grants, and row-level security policies.
@@ -22,7 +23,7 @@ For a separate deployment or fork:
 
 The checked-in config contains only the Wefans project URL and public publishable key. **Never put a Supabase `service_role` or secret key in this website or repository.** Row-level security policies protect user data.
 
-Once connected, people can sign up as clients or freelancers, freelancers can update their public profile and publish services, and authenticated conversation participants can exchange persistent realtime messages. Email confirmation may be enabled in Supabase Auth settings.
+Once connected, people can sign up as clients or freelancers, freelancers can update their public profile and publish services, and authenticated conversation participants can exchange persistent realtime messages. Contacting a published service opens its conversation on the full-page Messages screen. The existing conversations, messages, row-level security, and Realtime setup support this page; no extra database tables are required. Email confirmation may be enabled in Supabase Auth settings.
 
 ## Publish with GitHub Pages
 
