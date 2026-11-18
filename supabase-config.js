@@ -1,4 +1,4 @@
 window.WEFANS_SUPABASE_CONFIG = {
-  url: "",
-  anonKey: ""
+  url: "https://hnmfyisaofcfyibrwnxz.supabase.co",
+  anonKey: "sb_publishable_2uHVobeEyvYHGLurwtSCgQ_lJrmMvvd"
 };
